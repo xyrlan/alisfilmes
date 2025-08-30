@@ -78,11 +78,12 @@ export function VideoLoader({
                 src={src}
                 autoPlay={autoPlay}
                 muted={muted}
+                preload='true'
                 loop={loop}
                 onLoad={handleLoadedData}
                 playsInline={playsInline}
                 className={cn(
-                    "w-full h-full object-cover",
+                    "w-full h-full object-cover scale-y-110",
                     videoClassName
                 )}
                 onWaiting={handleWaiting}
