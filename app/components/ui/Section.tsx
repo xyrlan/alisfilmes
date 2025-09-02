@@ -9,11 +9,11 @@ interface SectionProps extends HTMLAttributes<HTMLElement> {
 }
 
 const spacingClasses = {
-    sm: 'py-12',
-    md: 'py-16',
-    lg: 'py-20',
-    xl: 'py-24',
-    none: 'py-0'
+    sm: 'md:py-12 py-8',
+    md: 'md:py-16 py-12',
+    lg: 'md:py-20 py-12',
+    xl: 'md:py-24 py-16',
+    none: 'md:py-0 py-0'
 }
 
 export function Section({

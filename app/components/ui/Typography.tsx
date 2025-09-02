@@ -11,7 +11,7 @@ interface TypographyProps {
 export function H0({ children, className, as: Component = 'h1', ...props }: TypographyProps) {
     return (
         <Component className={cn(
-            'text-5xl sm:text-6xl lg:text-7xl tracking-tight text-foreground',
+            'text-4xl sm:text-6xl lg:text-7xl tracking-tight text-foreground',
             className
         )} {...props}>
             {children}
