@@ -49,8 +49,8 @@ const SCROLL_CONFIG = {
 
 const ANIMATION_CONFIG = {
     desktop: {
-        initial: { y: 30 },
-        animate: { y: 0 },
+        initial: { y: 30, scale: 1.1 },
+        animate: { y: 0, scale: 1 },
         transition: {
             duration: 0.3,
             ease: [0.25, 0.8, 0.25, 1] as const,
