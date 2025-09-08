@@ -35,7 +35,7 @@ export default async function RootLayout({
       <body
         className={`${urbanist.variable} antialiased font-urbanist min-h-screen`}
       >
-        <Header />
+        <Header isDark={false} />
         {children}
         <Footer />
       </body>

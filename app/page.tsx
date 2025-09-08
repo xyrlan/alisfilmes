@@ -6,9 +6,9 @@ import Loading from "./loading";
 import { Services } from "./components/sections/Services";
 import { Call } from "./components/sections/Call";
 import { Brands } from "./components/sections/Brands";
+import { Call2 } from "./components/sections/Call2";
 
 export default async function Home() {
-
   // await delay(2000);
 
   return (
@@ -18,6 +18,7 @@ export default async function Home() {
       <Call />
       <Projects />
       <Brands />
+      <Call2 />
     </Suspense>
   );
 }

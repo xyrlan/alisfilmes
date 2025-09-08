@@ -32,8 +32,8 @@ interface FooterProps {
 // Constants for better maintainability
 const DEFAULT_SECTIONS: FooterSection[] = [
     {
-        title: 'Empresa',
-        href: '#empresa'
+        title: 'O que fazemos',
+        href: '#o-que-fazemos'
     },
     {
         title: 'Serviços',
@@ -43,10 +43,7 @@ const DEFAULT_SECTIONS: FooterSection[] = [
         title: 'Contato',
         href: '#contato'
     },
-    {
-        title: 'O que fazemos',
-        href: '#o-que-fazemos'
-    },
+
     {
         title: 'Projetos',
         href: '#projetos'
