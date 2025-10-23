@@ -8,7 +8,7 @@ import { H2 } from "../ui/Typography";
 
 // Constants for better maintainability
 const VIDEO_CONFIG = {
-    src: "https://alisfilmes.s3.sa-east-1.amazonaws.com/alisteaser.mp4",
+    src: "https://alisfilmes.s3.sa-east-1.amazonaws.com/teaser.mov",
     autoPlay: true,
     muted: true,
     loop: true,
