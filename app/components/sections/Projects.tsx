@@ -246,7 +246,7 @@ const ProjectItem = ({
     className={cn(
       "flex border-b w-full",
       isLast && "border-b-0",
-      hoveredProject !== null ? "border-background/30" : "border-foreground/30"
+      hoveredProject !== null ? "border-foreground/30" : "border-foreground/30"
     )}
   >
     <ProjectLink
@@ -279,7 +279,7 @@ const ViewMoreButton = () => (
       size="xl"
       className="rounded-full p-8 group shadow-lg bg-foreground text-background"
     >
-      <p>Ver mais projetos</p>
+      <p>Ver mais cases</p>
     </Button>
     <span
       className={cn(
@@ -406,7 +406,7 @@ export function Projects() {
         )}
       />
 
-      <H4>Projetos</H4>
+      <H4>Cases</H4>
 
       <div ref={containerRef}>
         <ProjectList

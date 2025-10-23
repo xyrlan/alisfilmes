@@ -44,6 +44,7 @@ export default function BrandMarquee({
                         alt={`Logo da ${brand.name}`}
                         width={brand.width || 120}
                         height={brand.height || 60}
+                        priority={true}
                         className="h-12 w-auto object-contain filter grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
                     />
                 </div>

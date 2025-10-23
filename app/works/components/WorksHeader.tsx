@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 export default function WorksHeader() {
   return (
     <div className="gap-10 md:gap-20 py-10 relative max-w-7xl mx-auto">
-      <H0 className="font-semibold text-background">
+      <H0 className="font-semibold text-background flex flex-wrap gap-4 justify-center">
         <Small className="font-thin align-text-top text-nowrap md:mr-20 mr-10 tracking-normal ">
           Our Work
         </Small>
@@ -33,15 +33,7 @@ export default function WorksHeader() {
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          marca
-        </motion.span>{" "}
-        <motion.span
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          viewport={{ once: true }}
-        >
-          integradas
+          marcas
         </motion.span>{" "}
         <motion.span
           initial={{ opacity: 0, y: 20 }}

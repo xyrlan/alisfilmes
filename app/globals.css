@@ -4,6 +4,7 @@
   --background: #ffffff;
   --foreground: #171717;
   --secondary: #ba8d4f;
+  scroll-behavior: smooth !important;
 }
 
 @theme inline {

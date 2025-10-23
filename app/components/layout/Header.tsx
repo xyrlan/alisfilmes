@@ -8,11 +8,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 interface NavItem {
+  id: string;
   label: string;
   href: string;
+  section?: string;
 }
 
 interface HeaderProps {
@@ -24,10 +26,10 @@ interface HeaderProps {
 }
 
 const defaultNavItems: NavItem[] = [
-  { label: "Início", href: "#inicio" },
-  { label: "Sobre", href: "#sobre" },
-  { label: "Works", href: "/works" },
-  { label: "Contato", href: "#contato" },
+  { id: "inicio", label: "Início", href: "/", section: "#inicio" },
+  { id: "servicos", label: "Serviços", href: "/", section: "#servicos" },
+  { id: "cases", label: "Cases", href: "/works" },
+  { id: "contato", label: "Contato", href: "/", section: "#contato" },
 ];
 
 export function Header() {
@@ -36,7 +38,7 @@ export function Header() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [isOnTop, setIsOnTop] = useState(true);
-
+  const router = useRouter();
   const pathname = usePathname();
   const isDarkPages = ["/works"];
   const isDarkPage = isDarkPages.includes(pathname);
@@ -74,16 +76,17 @@ export function Header() {
     >
       <motion.div
         className={cn(
-          "flex items-center justify-between px-4 md:px-6 py-4 md:py-6",
-          isOnTop ? "bg-transparent" : "bg-foreground text-background delay-200"
-        )}
+          "flex items-center justify-between px-4 md:px-6 py-4 md:py-6"        )}
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2, duration: 1 }}
+        animate={{ 
+          opacity: 1,
+          color: isOnTop && !isDarkPage ? "white" : "black",
+          backgroundColor: isOnTop ? "transparent" : "white"
+        }}
       >
         {/* Logo */}
         <div className="flex items-center">
-          <Link href="/" className="text-xl font-bold text-foreground">
+          <Link href="/">
             {isOnTop && !isDarkPage ? (
               <Image
                 src="/alishorizontal-branca.png"
@@ -108,9 +111,9 @@ export function Header() {
         <nav className="hidden md:flex items-center space-x-15">
           {defaultNavItems.map((item, index) => (
             <motion.div
-              key={item.href}
+              key={item.id}
               className="relative text-shadow-2xs"
-              onHoverStart={() => setHoveredItem(item.href)}
+              onHoverStart={() => setHoveredItem(item.id)}
               onHoverEnd={() => setHoveredItem(null)}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -122,19 +125,22 @@ export function Header() {
                   transition: { duration: 0.4 },
                 }}
               >
-                <Link
-                  href={item.href}
+                <button
+                  onClick={() => {
+                    router.push(item.href + (item.section || ""), {
+                      scroll: true
+                    });
+                  }}
                   className={cn(
-                    "text-lg font-semibold transition-colors relative z-10",
-                    isDarkPage && "text-background"
+                    "text-lg font-semibold transition-colors relative z-10 cursor-pointer",
                   )}
                 >
                   {item.label}
-                </Link>
+                </button>
               </motion.div>
 
               <AnimatePresence>
-                {hoveredItem === item.href && (
+                {hoveredItem === item.id && (
                   <motion.div
                     className="absolute -left-8 top-1/2"
                     initial={{
@@ -244,12 +250,12 @@ export function Header() {
               <nav className="flex flex-col space-y-4">
                 {defaultNavItems.map((item, index) => (
                   <motion.div
-                    key={item.href}
+                    key={item.id}
                     className="relative"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    onHoverStart={() => setHoveredItem(item.href)}
+                    onHoverStart={() => setHoveredItem(item.id)}
                     onHoverEnd={() => setHoveredItem(null)}
                   >
                     <motion.div
@@ -259,7 +265,8 @@ export function Header() {
                       }}
                     >
                       <Link
-                        href={item.href}
+                        href={item.href + (item.section || "")}
+                        scroll={true}
                         className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors relative z-10 block"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
@@ -268,7 +275,7 @@ export function Header() {
                     </motion.div>
 
                     <AnimatePresence>
-                      {hoveredItem === item.href && (
+                      {hoveredItem === item.id && (
                         <motion.div
                           className="absolute -left-6 top-1/2"
                           initial={{

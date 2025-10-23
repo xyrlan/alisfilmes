@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import { Section } from "../ui/Section";
-import { H0, H1, H4, Small } from "../ui/Typography";
+import { Body, H0, H1, H4, Lead, Small } from "../ui/Typography";
 import { cn } from "@/lib/utils";
 import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
+import { ArrowRight } from "lucide-react";
 
 // Constants for better maintainability
 const SERVICES_DATA = [
@@ -24,21 +25,16 @@ const SERVICES_DATA = [
         description: "Produção de institucionais para o seu negócio",
         image: "/services/institucional.jpg",
     },
-    {
-        title: "Manifestos",
-        description: "Produção de manifestos para o seu negócio",
-        image: "/services/manifesto.jpg",
-    },
+    // {
+    //     title: "Manifestos",
+    //     description: "Produção de manifestos para o seu negócio",
+    //     image: "/services/manifesto.jpg",
+    // },
     {
         title: "Comerciais para TV e streaming",
         description: "Produção de comerciais para TV e streaming para o seu negócio",
         image: "/services/commercial.png",
     },
-    {
-        title: "Video de ativação da marca",
-        description: "Produção de video de ativação da marca para o seu negócio",
-        image: "/services/brand.jpg",
-    }
 ] as const;
 
 const SCROLL_CONFIG = {
@@ -192,8 +188,8 @@ const ServiceCard = ({
 }) => (
     <motion.div
         className={cn(
-            "relative group",
-            isEven ? "translate-y-0" : "translate-y-20"
+            "relative group h-full cursor-pointer",
+            isEven ? "translate-y-0" : "translate-y-5"
         )}
         initial={ANIMATION_CONFIG.desktop.initial}
         whileInView={ANIMATION_CONFIG.desktop.animate}
@@ -211,7 +207,7 @@ const ServiceCard = ({
         </H0>
 
         <motion.div
-            className="md:max-h-[371px] rounded-md overflow-hidden"
+            className="h-full w-full rounded-md overflow-hidden"
             initial={ANIMATION_CONFIG.image.initial}
             whileInView={ANIMATION_CONFIG.image.animate}
             transition={{
@@ -223,14 +219,24 @@ const ServiceCard = ({
             <Image
                 src={service.image}
                 alt={service.title}
-                width={500}
-                height={500}
-                className="object-contain group-hover:scale-105 transition-all duration-500"
+                fill
+                className="object-cover object-top group-hover:object-center group-hover:scale-105 transition-all duration-500 rounded-md "
             />
         </motion.div>
 
-        <H4 className="font-bold text-background py-4">{service.title}</H4>
-        <Small className="text-background/80">{service.description}</Small>
+<Small as="p" className="text-background/80 mt-4 font-semibold ">Soluções</Small>
+        <H4 className="font-bold text-background py-4 flex items-center gap-2">
+            {service.title}
+            <span
+      className={cn(
+        "flex items-center justify-center text-sm group-hover:opacity-100 opacity-100 group-hover:translate-x-2 transition-all duration-500 rounded-full p-2 bg-background text-foreground"
+      )}
+    >
+      <ArrowRight className="w-4 h-4" />
+    </span>
+        </H4>
+        
+        {/* <Small className="text-background/80">{service.description}</Small> */}
     </motion.div>
 );
 
@@ -342,7 +348,7 @@ const ProgressBar = ({
 );
 
 const DesktopGrid = () => (
-    <div className="hidden md:grid xl:grid-cols-4 md:grid-cols-3 gap-12 pt-20 md:pt-32 md:space-y-20 px-8">
+    <div className="h-[70%] hidden md:grid xl:grid-cols-4 md:grid-cols-2 gap-12 pt-20 md:pt-32 md:space-y-20 px-8">
         {SERVICES_DATA.map((service, index) => (
             <ServiceCard
                 key={service.title}
@@ -399,10 +405,10 @@ export function Services() {
     const { scrollRef, scrollProgress, activeCard, scrollVelocity } = useScrollManager(SERVICES_DATA.length);
 
     return (
-        <Section spacing="xl" className="md:px-8 px-0 bg-foreground text-background">
+        <Section id="servicos" spacing="xl" className="md:px-8 px-0 bg-foreground text-background h-screen">
             <div className="md:px-8 px-6">
                 <H1 className="font-semibold text-background">
-                    Seu parceiro de confiança para inovação em seis ofertas de serviços estratégicos:
+                Seu parceiro de confiança para serviços estratégicos de audiovisual:
                 </H1>
             </div>
 

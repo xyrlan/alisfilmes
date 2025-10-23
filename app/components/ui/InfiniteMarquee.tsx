@@ -1,7 +1,7 @@
 'use client'
 
-import { motion } from 'motion/react'
-import { ReactNode } from 'react'
+import { motion, useMotionValue, useTransform, animate } from 'motion/react'
+import { ReactNode, useEffect, useRef } from 'react'
 
 interface InfiniteMarqueeProps {
     children: ReactNode
@@ -18,29 +18,97 @@ export default function InfiniteMarquee({
     pauseOnHover = true,
     className = ''
 }: InfiniteMarqueeProps) {
-    const animationDirection = direction === 'left' ? [0, -1000] : [0, 1000]
+    const containerRef = useRef<HTMLDivElement>(null)
+    const hoverRef = useRef(false)
+    const animationRef = useRef<ReturnType<typeof animate> | null>(null)
+    const x = useMotionValue(0)
+
+    useEffect(() => {
+        if (!containerRef.current) return
+
+        const container = containerRef.current
+        const scrollWidth = container.scrollWidth
+        const containerWidth = container.offsetWidth
+        
+        // Calcular distância de movimento baseada no tamanho do conteúdo
+        const moveDistance = scrollWidth / 2
+        
+        // Calcular duração baseada na velocidade desejada
+        const duration = moveDistance / speed
+
+        const animateMarquee = () => {
+            if (hoverRef.current) return
+
+            const startValue = direction === 'left' ? 0 : -moveDistance
+            const endValue = direction === 'left' ? -moveDistance : 0
+
+            animationRef.current = animate(x, [startValue, endValue], {
+                duration: duration,
+                ease: "linear",
+                repeat: Infinity,
+                repeatType: "loop",
+            })
+        }
+
+        animateMarquee()
+
+        return () => {
+            if (animationRef.current) {
+                animationRef.current.stop()
+            }
+        }
+    }, [speed, direction, x])
+
+    const handleMouseEnter = () => {
+        if (pauseOnHover) {
+            hoverRef.current = true
+            if (animationRef.current) {
+                animationRef.current.stop()
+            }
+        }
+    }
+
+    const handleMouseLeave = () => {
+        if (pauseOnHover) {
+            hoverRef.current = false
+            // Retoma a animação da posição atual
+            if (containerRef.current) {
+                const scrollWidth = containerRef.current.scrollWidth
+                const moveDistance = scrollWidth / 2
+                const duration = moveDistance / speed
+                
+                const currentX = x.get()
+                const isLeft = direction === 'left'
+                
+                // Normalizar a posição para o ciclo correto
+                let normalizedX = currentX % moveDistance
+                if (normalizedX > 0) normalizedX -= moveDistance
+                
+                const startValue = normalizedX
+                const endValue = isLeft ? startValue - moveDistance : startValue + moveDistance
+                
+                animationRef.current = animate(x, [startValue, endValue], {
+                    duration: duration,
+                    ease: "linear",
+                    repeat: Infinity,
+                    repeatType: "loop",
+                })
+            }
+        }
+    }
 
     return (
-        <div className={`overflow-hidden whitespace-nowrap relative ${className} mask-l-from-90% mask-r-from-90%`}>
+        <div 
+            className={`overflow-hidden whitespace-nowrap relative ${className} mask-l-from-90% mask-r-from-90%`}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+        >
             <motion.div
+                ref={containerRef}
                 className="inline-flex will-change-transform"
-                animate={{
-                    x: animationDirection,
-                }}
-                transition={{
-                    x: {
-                        repeat: Infinity,
-                        repeatType: "loop",
-                        duration: speed,
-                        ease: "linear",
-                    },
-                }}
-                whileHover={pauseOnHover ? {
-                    transition: { duration: 0.5 },
-                    x: animationDirection[0]
-                } : {}}
                 style={{
-                    transform: 'translateZ(0)', // Força aceleração de hardware
+                    x,
+                    transform: 'translateZ(0)',
                 }}
             >
                 {/* Primeira instância dos elementos */}
@@ -49,16 +117,6 @@ export default function InfiniteMarquee({
                 </div>
 
                 {/* Segunda instância para o efeito infinito */}
-                <div className="flex gap-8 items-center shrink-0">
-                    {children}
-                </div>
-
-                {/* Terceira instância para garantir continuidade */}
-                <div className="flex gap-8 items-center shrink-0">
-                    {children}
-                </div>
-
-                {/* Quarta instância para suavizar ainda mais */}
                 <div className="flex gap-8 items-center shrink-0">
                     {children}
                 </div>

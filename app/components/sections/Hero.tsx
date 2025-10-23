@@ -17,18 +17,18 @@ const VIDEO_CONFIG = {
 const LOGO_CONFIG = {
     src: "/alishorizontal-branca.png",
     alt: "Alis Filmes Logo",
-    width: 750,
-    height: 750,
+    width: 500,
+    height: 500,
 };
 
 const SCROLL_CONFIG = {
     src: "/scroll.svg",
     alt: "Scroll indicator",
-    width: 100,
-    height: 100,
+    width: 75,
+    height: 75,
 };
 
-const TAGLINE = "Acelerando crescimento atraves de marketing e tecnologia.";
+const TAGLINE = "Contamos histórias que perpetuam marcas.";
 
 // Animation variants
 const logoAnimation = {
@@ -62,7 +62,6 @@ const scrollAnimation = {
     transition: {
         duration: 0.6,
         ease: "easeOut" as const,
-        delay: 1.8,
     },
     whileHover: {
         scale: 1.1,
@@ -94,7 +93,12 @@ const HeroTagline = () => (
 );
 
 const HeroScrollIndicator = () => (
-    <motion.div {...scrollAnimation} className="cursor-pointer">
+    <motion.div {...scrollAnimation} className="cursor-pointer" onClick={() => {
+        window.scrollTo({
+            top: window.innerHeight,
+            behavior: "smooth"
+        });
+    }}>
         <Image
             src={SCROLL_CONFIG.src}
             alt={SCROLL_CONFIG.alt}

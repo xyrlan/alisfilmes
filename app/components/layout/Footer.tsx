@@ -1,6 +1,6 @@
 'use client'
 
-import { Small, Caption, Body, Lead, H4, H2 } from '@/app/components/ui/Typography'
+import { Small, Caption, Body, Lead, H4, H2, H3 } from '@/app/components/ui/Typography'
 import Image from 'next/image'
 import { Section } from '../ui/Section'
 import Link from 'next/link'
@@ -147,9 +147,9 @@ const NavigationItem = ({
                 onMouseEnter={() => setHoveredItem(section.href)}
                 onMouseLeave={() => setHoveredItem(null)}
             >
-                <H2>
+                <H3>
                     {section.title}
-                </H2>
+                </H3>
 
                 <span className={cn(
                     "md:hidden flex items-center justify-center text-sm group-hover:opacity-100 opacity-100 group-hover:translate-x-5 transition-all duration-500 rounded-full md:p-4 p-2 bg-foreground text-background",
