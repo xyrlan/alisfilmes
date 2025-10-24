@@ -12,13 +12,15 @@ import { Button } from "../ui/Button";
 // Constants for better maintainability
 const PROJECTS_DATA = [
   {
-    title: "Lançamento para a marca já estabelecida Frango no Pote",
+    id: 1,
+    title: "Lançamento para Frango no Pote",
     description: "Descrição do projeto 1",
     image: "https://alisfilmes.s3.sa-east-1.amazonaws.com/fnp.mp4",
     bgcolor: "bg-red-200",
     color: "text-red-950",
   },
   {
+    id: 2,
     title: "Reels para Pilotis Imóveis",
     description: "Descrição do projeto 3",
     image: "https://alisfilmes.s3.sa-east-1.amazonaws.com/pilotis2.mp4",
@@ -27,6 +29,7 @@ const PROJECTS_DATA = [
     color: "text-green-950",
   },
   {
+    id: 3,
     title: "Isofen 10 anos - Teaser",
     description: "Descrição do projeto 4",
     image: "https://alisfilmes.s3.sa-east-1.amazonaws.com/isofen.mp4",
@@ -34,6 +37,7 @@ const PROJECTS_DATA = [
     color: "text-amber-950",
   },
   {
+    id: 4,
     title: "Reels para Açaí Puríssimo",
     description: "Descrição do projeto 2",
     image: "https://alisfilmes.s3.sa-east-1.amazonaws.com/acai.mp4",
@@ -44,10 +48,10 @@ const PROJECTS_DATA = [
 ] as const;
 
 const INTERSECTION_CONFIG = {
-  rootMargin: "-30% 0px -30% 0px", // More restrictive center focus
-  threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
-  centerZoneThreshold: 0.4, // Within 40% of viewport height
-  minVisibility: 0.5, // At least 50% visible
+  rootMargin: "-10% 50px -10% 50px",
+  threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5],
+  centerZoneThreshold: 0.5,
+  minVisibility: 0.5,
 };
 
 const ANIMATION_CONFIG = {
@@ -103,16 +107,12 @@ const useProjectIntersection = () => {
           );
           const visibility = entry.intersectionRatio;
 
-          // Get the bounding rect to check if element is properly in the center area
           const rect = entry.boundingClientRect;
           const viewportHeight = window.innerHeight;
           const elementCenter = rect.top + rect.height / 2;
           const viewportCenter = viewportHeight / 2;
           const distanceFromCenter = Math.abs(elementCenter - viewportCenter);
 
-          // Only consider elements that are:
-          // 1. At least 50% visible
-          // 2. Not too far from viewport center (within 40% of viewport height)
           const isInCenterZone =
             distanceFromCenter <
             viewportHeight * INTERSECTION_CONFIG.centerZoneThreshold;
@@ -130,7 +130,6 @@ const useProjectIntersection = () => {
           }
         });
 
-        // Only update if we have a valid candidate
         if (hasValidCandidate) {
           setHoveredProject(mostVisibleIndex);
           setLastHoveredProject(mostVisibleIndex);
@@ -161,7 +160,6 @@ const useProjectIntersection = () => {
   };
 };
 
-// Sub-components for better organization
 const ProjectLink = ({
   project,
   index,
@@ -200,9 +198,10 @@ const ProjectLink = ({
       )}
     >
       {project.title}
-      <span
+     &nbsp;
+     <span
         className={cn(
-          "flex items-center justify-center text-sm transition-all duration-500 rounded-full md:p-4 p-2",
+          "whitespace-nowrap flex items-center justify-center text-sm transition-all duration-500 rounded-full md:p-4 p-2",
           isMobile
             ? index === lastHoveredProject
               ? "opacity-100 translate-x-0 bg-foreground/40"
@@ -246,7 +245,7 @@ const ProjectItem = ({
     className={cn(
       "flex border-b w-full",
       isLast && "border-b-0",
-      hoveredProject !== null ? "border-foreground/30" : "border-foreground/30"
+      hoveredProject !== null ? "border-foreground/10" : "border-foreground/10"
     )}
   >
     <ProjectLink
@@ -309,15 +308,16 @@ const ProjectVideo = ({
     <video
       src={project.image}
       className={cn(
-        "mask-l-from-90% absolute right-0 bottom-0 object-cover transition-all origin-center duration-300 z-10 delay-200",
+        "mask-l-from-10% absolute right-0 bottom-0 object-cover transition-all origin-center duration-300 z-10 delay-200 w-[90%]",
         index === lastHoveredProject
           ? "opacity-100 translate-x-0"
           : "opacity-0 translate-x-50",
-        (project as any).type === "reels" ? "h-full" : "h-full"
+        (project as any).type === "reels" ? "h-full" : "h-full",
+        project.id === 1 && "scale-y-150"
       )}
       autoPlay
       muted
-      loop
+      loop={true}
       playsInline
       preload="auto"
       poster={project.image}
@@ -368,7 +368,7 @@ const VideoBackground = ({
   projects: typeof PROJECTS_DATA;
   lastHoveredProject: number | null;
 }) => (
-  <div className="absolute right-0 bottom-0 w-full md:w-[70%] h-full antialiased -z-10">
+  <div className="absolute right-0 bottom-0 w-full h-full antialiased -z-10">
     <AnimatePresence>
       {projects.map((project, index) => (
         <ProjectVideo

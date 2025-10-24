@@ -1,6 +1,5 @@
 'use client'
-
-import { Small, Caption, Body, Lead, H4, H2, H3 } from '@/app/components/ui/Typography'
+import { Small, Body, Lead, H3 } from '@/app/components/ui/Typography'
 import Image from 'next/image'
 import { Section } from '../ui/Section'
 import Link from 'next/link'
@@ -8,11 +7,15 @@ import { AnimatePresence, motion } from 'motion/react'
 import { ArrowRightIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { NextRouter } from 'next/router'
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
 // Types
 interface FooterSection {
     title: string
     href: string
+    section?: string
 }
 
 interface SocialLink {
@@ -33,24 +36,28 @@ interface FooterProps {
 const DEFAULT_SECTIONS: FooterSection[] = [
     {
         title: 'O que fazemos',
-        href: '#o-que-fazemos'
+        href: '/',
+        section: '#sobre'
     },
     {
         title: 'Serviços',
-        href: '#servicos'
+        href: '/',
+        section: '#servicos'
     },
     {
         title: 'Contato',
-        href: '#contato'
+        href: '/',
+        section: '#contato'
     },
 
     {
-        title: 'Projetos',
-        href: '#projetos'
+        title: 'Cases',
+        href: '/works',
     },
     {
         title: 'Connect',
-        href: '#connect'
+        href: '/',
+        section: '#connect'
     }
 ] as const
 
@@ -112,7 +119,10 @@ const NavigationSection = ({
     sections: FooterSection[];
     hoveredItem: string | null;
     setHoveredItem: (href: string | null) => void;
-}) => (
+}) => {
+    const router = useRouter()
+
+     return (
     <div className="grid grid-cols-1 md:grid-cols-4 md:gap-8 gap-3 pb-8 md:pb-16">
         <Small className='pb-4'>
             Continue explorando...
@@ -122,29 +132,33 @@ const NavigationSection = ({
                 <NavigationItem
                     key={section.title}
                     section={section}
+                    router={router}
                     hoveredItem={hoveredItem}
                     setHoveredItem={setHoveredItem}
                 />
             ))}
         </ul>
     </div>
-)
+)}
 
 const NavigationItem = ({
     section,
+    router,
     hoveredItem,
     setHoveredItem
 }: {
     section: FooterSection;
+    router: AppRouterInstance;
     hoveredItem: string | null;
     setHoveredItem: (href: string | null) => void;
 }) => (
-    <div>
         <li>
-            <Link
-                href={section.href}
-                className="text-foreground hover:text-foreground/80 transition-colors font-semibold flex items-center justify-between relative"
-                onMouseEnter={() => setHoveredItem(section.href)}
+            <button
+                onClick={() => router.push(section.href + (section.section || ""), {
+                    scroll: true
+                })}
+                className="text-foreground hover:text-foreground/80 transition-colors font-semibold relative cursor-pointer inline-flex items-center gap-2"
+                onMouseEnter={() => setHoveredItem(section.title)}
                 onMouseLeave={() => setHoveredItem(null)}
             >
                 <H3>
@@ -154,11 +168,11 @@ const NavigationItem = ({
                 <span className={cn(
                     "md:hidden flex items-center justify-center text-sm group-hover:opacity-100 opacity-100 group-hover:translate-x-5 transition-all duration-500 rounded-full md:p-4 p-2 bg-foreground text-background",
                 )}>
-                    <ArrowRightIcon className="w-5 h-5" />
+                    <ArrowRightIcon className="w-4 h-4" />
                 </span>
 
                 <AnimatePresence>
-                    {hoveredItem === section.href && (
+                    {hoveredItem === section.title && (
                         <motion.div
                             className="absolute -left-10 top-1/2"
                             {...ANIMATION_CONFIG.star}
@@ -173,9 +187,8 @@ const NavigationItem = ({
                         </motion.div>
                     )}
                 </AnimatePresence>
-            </Link>
+            </button>
         </li>
-    </div>
 )
 
 const DescriptionSection = () => (
@@ -209,7 +222,7 @@ const SocialLinks = ({
                 key={link.href}
                 href={link.href}
                 aria-label={link.label}
-                className='h-10 md:w-15 w-10 md:h-15 flex items-center justify-center rounded-full border border-foreground/30 object-cover overflow-hidden'
+                className='h-10 md:w-15 w-10 md:h-15 flex items-center justify-center rounded-full border border-foreground/30 object-cover overflow-hidden group'
             >
                 {link.icon && (
                     <Image
@@ -217,6 +230,7 @@ const SocialLinks = ({
                         alt={link.label}
                         width={100}
                         height={100}
+                        className='group-hover:scale-150 group-hover:rotate-12 transition-all duration-500'
                     />
                 )}
             </Link>

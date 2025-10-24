@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { Container } from "@/app/components/ui/Container";
 import { Button } from "@/app/components/ui/Button";
@@ -76,7 +75,7 @@ export function Header() {
     >
       <motion.div
         className={cn(
-          "flex items-center justify-between px-4 md:px-6 py-4 md:py-6"        )}
+          "flex items-center justify-between px-4 md:px-6 md:pr-10 py-4 md:py-6"        )}
         initial={{ opacity: 0 }}
         animate={{ 
           opacity: 1,

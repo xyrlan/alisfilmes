@@ -11,7 +11,7 @@ interface TypographyProps {
 export function H0({ children, className, as: Component = 'h1', ...props }: TypographyProps) {
     return (
         <Component className={cn(
-            'text-4xl sm:text-6xl lg:text-7xl tracking-tight text-foreground',
+            'text-4xl sm:text-6xl 2xl:text-7xl tracking-tight text-foreground',
             className
         )} {...props}>
             {children}
@@ -22,7 +22,7 @@ export function H0({ children, className, as: Component = 'h1', ...props }: Typo
 export function H1({ children, className, as: Component = 'h1', ...props }: TypographyProps) {
     return (
         <Component className={cn(
-            'text-4xl sm:text-5xl lg:text-6xl tracking-tight text-foreground',
+            'text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl tracking-tight text-foreground',
             className
         )} {...props}>
             {children}

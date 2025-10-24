@@ -348,7 +348,7 @@ const ProgressBar = ({
 );
 
 const DesktopGrid = () => (
-    <div className="h-[70%] hidden md:grid xl:grid-cols-4 md:grid-cols-2 gap-12 pt-20 md:pt-32 md:space-y-20 px-8">
+    <div className="2xl:h-[70%] lg:h-[60%] hidden md:grid xl:grid-cols-4 md:grid-cols-2 gap-12 pt-20 md:pt-32 md:space-y-20 px-8">
         {SERVICES_DATA.map((service, index) => (
             <ServiceCard
                 key={service.title}

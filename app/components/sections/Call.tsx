@@ -9,7 +9,7 @@ import Image from "next/image";
 
 export function Call() {
     return (
-        <Section spacing="xl" className="bg-foreground text-background">
+        <Section spacing="md" className="bg-foreground text-background">
             <Container>
                 <div className="flex max-md:flex-col items-start gap-10 md:gap-20 py-10 relative">
                     <Small className="text-semibold" >Connect</Small>
@@ -17,7 +17,7 @@ export function Call() {
                         <Image src={circle} alt="Circle" className="absolute right-3 bottom-0 w-60 h-auto z-10" />
                         você?</span></H1>
                 </div>
-                <div className="flex items-center group cursor-pointer py-5 md:py-10">
+                <div className="flex items-center group cursor-pointer py-5 md:py-10 w-fit">
                     <Button size="xl" className={cn("rounded-full p-8 group shadow-lg bg-background text-foreground",
                     )}>
                         <p>Fale conosco</p>
