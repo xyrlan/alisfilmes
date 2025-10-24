@@ -434,7 +434,7 @@ Por favor, preencha as seguintes perguntas rápidas para que nossa equipe possa 
               </motion.div>
               <div className='h-6 w-6 bg-background/70 rounded-full self-end'></div>
             </div>
-            <div className='flex gap-2 2xl:max-w-xl max-w-lg'>
+            <div className='flex gap-2 2xl:max-w-xl max-w-lg self-start'>
               <Image src="/logobranconobg.png" alt="Logo" width={100} height={100} className='h-12 w-12 p-1 bg-black rounded-full self-end animate-pulse' />
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}

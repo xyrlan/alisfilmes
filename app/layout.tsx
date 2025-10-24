@@ -3,6 +3,8 @@ import { Geist, Geist_Mono, Urbanist } from "next/font/google";
 import "./globals.css";
 import { Header } from "./components/layout/Header";
 import { Footer } from "./components/layout/Footer";
+import { FormModalProvider } from "./components/contexts/FormModalContext";
+import { FullScreenForm } from "./components/ui/FullScreenForm";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,9 +37,12 @@ export default async function RootLayout({
       <body
         className={`${urbanist.variable} antialiased font-urbanist min-h-screen`}
       >
-        <Header />
-        {children}
-        <Footer />
+        <FormModalProvider>
+          <Header />
+          {children}
+          <Footer />
+          <FullScreenForm />
+        </FormModalProvider>
       </body>
     </html>
   );

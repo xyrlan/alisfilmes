@@ -8,6 +8,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { usePathname, useRouter } from "next/navigation";
+import { useFormModal } from "../contexts/FormModalContext";
 
 interface NavItem {
   id: string;
@@ -32,6 +33,7 @@ const defaultNavItems: NavItem[] = [
 ];
 
 export function Header() {
+  const { openForm } = useFormModal()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -190,6 +192,7 @@ export function Header() {
           <div className="flex items-center group cursor-pointer">
             <Button
               size="md"
+              onClick={openForm}
               className={cn(
                 "rounded-full  shadow-lg",
                 isOnTop && !isDarkPage ? "bg-foreground" : "bg-background",

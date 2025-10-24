@@ -6,8 +6,11 @@ import { H1, Small } from "../ui/Typography";
 import { cn } from "@/lib/utils";
 import circle from "@/public/circle.svg";
 import Image from "next/image";
+import { useFormModal } from "../contexts/FormModalContext";
 
 export function Call() {
+  const { openForm } = useFormModal()
+
     return (
         <Section spacing="md" className="bg-foreground text-background">
             <Container>
@@ -18,7 +21,7 @@ export function Call() {
                         você?</span></H1>
                 </div>
                 <div className="flex items-center group cursor-pointer py-5 md:py-10 w-fit">
-                    <Button size="xl" className={cn("rounded-full p-8 group shadow-lg bg-background text-foreground",
+                    <Button size="xl" onClick={openForm} className={cn("rounded-full p-8 group shadow-lg bg-background text-foreground",
                     )}>
                         <p>Fale conosco</p>
                     </Button>
