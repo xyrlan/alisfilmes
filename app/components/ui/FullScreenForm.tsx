@@ -306,7 +306,7 @@ export function FullScreenForm() {
               damping: 30,
               stiffness: 300
             }}
-            className="fixed inset-0 z-50 bg-background/90 overflow-y-auto grid grid-cols-2 py-20 px-4"
+            className="fixed inset-0 z-50 bg-background overflow-y-auto grid grid-cols-2 py-20 px-4"
             onKeyDown={handleKeyDown}
           >
             {/* Close Button */}
@@ -318,7 +318,7 @@ export function FullScreenForm() {
                 <X className="w-7 md:w-8 h-7 md:h-8 text-white" />
               </button>
             </div>
-<Image src="/alisphoto.png" alt="Form Background" width={1000} height={1000} className="object-cover" />
+<Image src="/alisphoto.png" alt="Form Background" width={1000} height={1000} className="object-cover grayscale-75" />
             {/* Form Content */}
             <div className="container mx-auto px-4 py-12 max-w-4xl">
               <div className="w-full flex flex-col gap-6">
