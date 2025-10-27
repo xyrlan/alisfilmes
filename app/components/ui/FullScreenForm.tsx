@@ -286,22 +286,13 @@ export function FullScreenForm() {
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            onClick={closeForm}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
-          />
-
           {/* Form Modal */}
           <motion.div
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ 
+              duration: 1,
               type: 'spring',
               damping: 30,
               stiffness: 300
